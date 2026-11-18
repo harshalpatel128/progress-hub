@@ -1,0 +1,508 @@
+# PYTHON & AI DEVELOPER ROADMAP - 6 MONTHS COMPREHENSIVE CURRICULUM
+# TOTAL TOPICS: 405 ORIGINAL MAIN TOPICS
+
+========================================================
+Month 1: Complete Python (95 Topics)
+========================================================
+
+----------------------------------------
+Part 1: Python Basics & Syntax Setup
+----------------------------------------
+1. Introduction to Python, History & Python Philosophy (Zen of Python)
+2. Installing Python 3, IDEs (VS Code, PyCharm), & Setting Up Virtual Environments (venv)
+3. Python Interactive Shell (REPL) & Running Python Scripts
+4. Variables, Dynamic Typing & Memory References (id(), type())
+5. Python Naming Conventions & PEP 8 Style Guide
+6. Primitive Data Types: int, float, complex, bool, str
+7. Type Casting & Type Conversion (Explicit vs Implicit)
+8. Arithmetic Operators & Operator Precedence (PEMDAS)
+9. Assignment & Augmented Assignment Operators
+10. Comparison & Relational Operators
+11. Logical Operators (and, or, not) & Short-Circuit Evaluation
+12. Bitwise Operators (&, |, ^, ~, <<, >>)
+13. Identity Operators (is, is not) vs Equality (==, !=)
+14. Membership Operators (in, not in)
+15. User Input with input() & String Sanitization
+16. String Fundamentals: Indexing, Slicing, & Immutability
+17. String Methods: upper, lower, title, strip, replace, split, join
+18. String Formatting: % formatting, str.format(), and f-strings
+19. Escape Sequences, Raw Strings (r"") & Multi-line Strings
+20. String Encoding, ASCII, Unicode & UTF-8 Basics
+21. Conditional Statements: if, elif, else Branches
+22. Nested Conditionals & Ternary Operator (Conditional Expressions)
+23. Match-Case Statements (Pattern Matching in Python 3.10+)
+24. Truthy and Falsy Values in Python
+25. Practical Mini-Project: Interactive Command-Line Calculator
+
+----------------------------------------
+Part 2: Control Flow & Loops
+----------------------------------------
+26. The while Loop: Syntax, Condition Evaluation & Infinite Loops
+27. The for Loop: Iterating over Ranges, Sequences, and Strings
+28. The range() Function: Start, Stop, and Step Parameters
+29. Loop Control Statements: break and continue
+30. The loop-else Clause (for-else and while-else Constructs)
+31. The pass Statement & Placeholder Code
+32. Nested Loops & Multidimensional Iteration
+33. The enumerate() Function for Index-Tracking Loops
+34. The zip() and zip_longest() Functions for Parallel Iteration
+35. The reversed() and sorted() Built-in Functions
+36. Loop Performance: Iteration Overhead & Best Practices
+37. Simulating Do-While Loops in Python
+38. Accumulator Pattern & Running Totals in Loops
+39. Searching & Sentinel Values in Loops
+40. Loop Unrolling Concepts & Vectorization Differences
+41. Iteration Protocols: iter() and next() Deep Dive
+42. Handling StopIteration Exception Manually
+43. Creating Custom Iterator Classes (__iter__, __next__)
+44. Infinite Iterators with itertools (count, cycle, repeat)
+45. Practical Mini-Project: Number Guessing Game with Scoring & History
+
+----------------------------------------
+Part 3: Data Structures (Lists, Tuples, Dictionaries, Sets)
+----------------------------------------
+46. Lists: Creation, Indexing, Slicing, and Modifiability
+47. List Operations: append, extend, insert, pop, remove, clear
+48. List Indexing Tricks: Negative Indices, Step Slicing & Slice Assignment
+49. List Sorting: list.sort() in-place vs sorted() built-in (key and reverse)
+50. Shallow Copy vs Deep Copy in Lists (copy module, copy() vs deepcopy())
+51. List Comprehensions: Syntax, Filtering, and Conditional Expressions
+52. Nested List Comprehensions & Flattening 2D Matrices
+53. Memory Allocation in Lists: Over-allocation & Dynamic Resizing
+54. Tuples: Creation, Immutability, Single-element Tuples & Tuple Packing
+55. Tuple Unpacking: Star Expressions (*args unpacking), Swapping Variables
+56. NamedTuples: collections.namedtuple & typing.NamedTuple
+57. Tuples as Dictionary Keys & Hashability Requirements
+58. Dictionaries: Key-Value Pairs, Hash Tables & Dict Initialization
+59. Dict Methods: get, keys, values, items, pop, popitem, setdefault, update
+60. Dictionary Comprehensions: Filtering and Transforming Dicts
+61. Merging Dictionaries: update(), pipe operator (| and |= in 3.9+)
+62. collections.defaultdict: Handling Missing Keys Elegantly
+63. collections.Counter: Frequency Counting, most_common() & Math on Counters
+64. collections.OrderedDict: Insertion-order Semantics & move_to_end()
+65. Sets: Uniqueness, Mutable Sets vs frozenset
+66. Set Operations: Union, Intersection, Difference, Symmetric Difference
+67. Set Methods: add, remove, discard, pop, issubset, issuperset
+68. Set Comprehensions & Filtering Duplicates efficiently
+69. Benchmarking Performance: Lists vs Sets vs Dicts Lookup Time (O(1) vs O(N))
+70. Practical Mini-Project: Contact Book & CRM with Search and Deduplication
+
+----------------------------------------
+Part 4: Functions, Modules & Functional Tools
+----------------------------------------
+71. Function Definitions (def), Calling, and Execution Flow
+72. Positional Arguments vs Keyword Arguments
+73. Default Arguments & The Mutable Default Argument Trap
+74. Arbitrary Arguments: *args for Variadic Positional Arguments
+75. Arbitrary Keyword Arguments: **kwargs for Variadic Dict Arguments
+76. Keyword-Only Arguments (*, arg) & Positional-Only Arguments (arg, /)
+77. Return Values: Returning Single Values, Tuples, and Early Returns
+78. Docstrings & PEP 257 (Google, Sphinx, NumPy Docstring Formats)
+79. Scope Rules: LEGB (Local, Enclosing, Global, Built-in)
+80. Modifying Scopes: global and nonlocal Keywords
+81. First-Class Functions: Passing Functions as Arguments & Variables
+82. Higher-Order Functions: map(), filter(), reduce() (functools.reduce)
+83. Anonymous Functions: lambda Expressions and Use Cases
+84. Closures: Inner Functions, Retaining Enclosing State & Factory Functions
+85. Recursion: Base Cases, Recursive Step, Call Stack & Recursion Limit
+86. Memoization Techniques & functools.lru_cache / functools.cache
+87. Python Modules: Creating, Importing (import, from x import y, as alias)
+88. Module Search Path (sys.path) & Environment Variable PYTHONPATH
+89. Python Packages: __init__.py, Relative vs Absolute Imports
+90. The Special Name __name__ and `if __name__ == "__main__":` Guard
+91. Standard Library Tour: math, random, datetime, time, calendar
+92. Operating System Interface: os, sys, shutil, pathlib.Path
+93. Type Hints & Annotations: typing module (List, Dict, Optional, Union, Any)
+94. Static Type Checking with Mypy Concepts
+95. Month 1 Capstone Project: Comprehensive Student Management & Grading System
+
+========================================================
+Month 2: Advanced Python + DSA (60 Topics)
+========================================================
+
+----------------------------------------
+Part 1: Object-Oriented Programming (OOP)
+----------------------------------------
+96. OOP Concepts: Classes, Objects, Instances & State
+97. The __init__ Constructor Method and self Parameter
+98. Instance Attributes vs Class Attributes
+99. Instance Methods, Class Methods (@classmethod) & Static Methods (@staticmethod)
+100. Encapsulation: Public, Protected (_var), and Private (__var) Name Mangling
+101. Properties and Getters/Setters with @property, @prop.setter, @prop.deleter
+102. Inheritance: Single Inheritance & Code Reusability
+103. The super() Function & Calling Parent Class Methods
+104. Multiple Inheritance & The Diamond Problem
+105. Method Resolution Order (MRO) & C3 Linearization Algorithm
+106. Polymorphism & Duck Typing ("If it walks like a duck...")
+107. Abstract Base Classes (ABCs) with abc module (@abstractmethod)
+108. Operator Overloading & Special Magic Methods (__str__, __repr__, __len__, __getitem__)
+109. Arithmetic Dunder Methods (__add__, __sub__, __mul__, __eq__, __lt__)
+110. The __call__ Method: Making Class Instances Callable Like Functions
+111. Object Lifecycle: __new__ vs __init__ and __del__ Finalizer
+112. Composition over Inheritance: Has-a vs Is-a Relationships
+113. Data Classes (@dataclasses.dataclass, frozen=True, field defaults)
+114. Slots in Python: __slots__ for Memory Optimization and Attribute Restriction
+115. Mini-Project: Object-Oriented Banking System with Transactions & Audit Logs
+
+----------------------------------------
+Part 2: Advanced Python Features & Metaprogramming
+----------------------------------------
+116. Function Decorators: Decorator Syntax (@dec), Wrapper Functions & functools.wraps
+117. Decorators with Arguments (3-tier decorator factories)
+118. Class Decorators & Decorating Class Methods
+119. Common Built-in Decorators & Practical Use Cases (Timer, Logger, Authenticator)
+120. Generators: The yield Statement, Generator Functions vs Regular Functions
+121. Generator Expressions: Memory Efficient Streams vs List Comprehensions
+122. Advanced Generator Methods: send(), throw(), and close()
+123. The yield from Expression for Delegating Sub-Generators
+124. Context Managers: The with Statement & Resource Management
+125. Creating Context Managers: __enter__ and __exit__ Methods
+126. contextlib Module: @contextmanager Decorator & closing()
+127. Exception Handling Hierarchy: try, except, else, finally Clauses
+128. Raising Custom Exceptions & Exception Chaining (raise ... from ...)
+129. Introspection & Reflection: getattr, setattr, hasattr, isinstance, issubclass, dir
+130. Metaclasses Basics: type as Class Creator, Custom Metaclasses (__init_subclass__)
+
+----------------------------------------
+Part 3: Data Structures & Algorithms (Foundations)
+----------------------------------------
+131. Algorithmic Complexity: Big-O, Big-Omega, Big-Theta Notations
+132. Analyzing Time Complexity: O(1), O(log N), O(N), O(N log N), O(N^2), O(2^N)
+133. Analyzing Space Complexity: Auxiliary Memory & In-Place Algorithms
+134. Dynamic Arrays Implementation & Amortized Time Complexity
+135. Singly Linked List: Node Class, Insertion, Deletion, Traversal
+136. Doubly Linked List: Bidirectional Pointers & Deletion Efficiency
+137. Circular Linked List: Fast Forward & Cycle Detection
+138. Fast and Slow Pointers Technique (Floyd's Cycle Finding Algorithm)
+139. Stack Data Structure: LIFO Principle, Implementation via Lists & collections.deque
+140. Stack Applications: Parentheses Matching, Expression Parsing & Call Stack
+141. Queue Data Structure: FIFO Principle, collections.deque vs list Performance
+142. Circular Queue & Double-Ended Queue (Deque) Implementation
+143. Priority Queue & Binary Heaps: heapify, heappush, heappop (heapq module)
+144. Linear Search: Implementation, Best, Average, and Worst-Case Analysis
+145. Binary Search: Iterative & Recursive Approaches on Sorted Arrays (bisect module)
+146. Binary Search Variations: Lower Bound, Upper Bound, Search in Rotated Array
+147. Bubble Sort & Optimized Bubble Sort with Early Termination
+148. Selection Sort: Finding Minima & In-Place Swapping
+149. Insertion Sort: Online Sorting & Performance on Nearly-Sorted Data
+150. Merge Sort: Divide and Conquer, Recursive Splitting, Merging Subarrays (O(N log N))
+151. Quick Sort: Partitioning Schemes (Lomuto vs Hoare), Pivot Selection, Worst-Case Mitigation
+152. Counting Sort & Radix Sort: Non-Comparison Sorting Algorithms
+153. Two Pointer Technique: Reversing, Palindromes, Pair Sum in Sorted Arrays
+154. Sliding Window Technique: Fixed Size vs Dynamic Window Minimum/Maximum
+155. Month 2 Capstone: Custom High-Performance Collections & Algorithms Library
+
+========================================================
+Month 3: DSA + SQL + Backend (70 Topics)
+========================================================
+
+----------------------------------------
+Part 1: Intermediate & Advanced DSA
+----------------------------------------
+156. Hash Tables Internals: Hash Functions, Collisions, Chaining vs Open Addressing
+157. Binary Trees: Tree Terminology, Node Representation, Depth vs Height
+158. Binary Tree Traversals: In-Order, Pre-Order, Post-Order (DFS)
+159. Level-Order Traversal (BFS) using Queues
+160. Binary Search Trees (BST): Insertion, Search, Deletion, In-Order Successor
+161. Validating BST & Lowest Common Ancestor (LCA)
+162. Balanced BST Concepts: AVL Trees & Red-Black Trees Rotation Mechanics
+163. Trie (Prefix Tree): Insertion, Search, StartsWith & Autocomplete Implementation
+164. Graph Representations: Adjacency Matrix vs Adjacency List
+165. Graph Traversal: Breadth-First Search (BFS) for Shortest Path in Unweighted Graphs
+166. Graph Traversal: Depth-First Search (DFS) Iterative and Recursive
+167. Cycle Detection in Directed Graphs (Topological Sort / Kahn's Algorithm / DFS Coloring)
+168. Cycle Detection in Undirected Graphs using Disjoint Set Union (DSU / Union-Find)
+169. Union-Find: Path Compression & Union by Rank Optimization
+170. Dijkstra's Algorithm: Single-Source Shortest Paths with Min-Heap
+171. Bellman-Ford Algorithm: Handling Negative Weight Edges & Detecting Negative Cycles
+172. Minimum Spanning Tree: Prim's Algorithm vs Kruskal's Algorithm
+173. Backtracking Paradigm: State Space Trees & Pruning
+174. N-Queens Problem & Sudoku Solver using Backtracking
+175. Dynamic Programming (DP) Philosophy: Optimal Substructure & Overlapping Subproblems
+176. DP Approaches: Top-Down with Memoization vs Bottom-Up Tabulation
+177. 1D DP Classic Problems: Climbing Stairs, House Robber, Coin Change
+178. 2D DP Classic Problems: Longest Common Subsequence (LCS) & Edit Distance
+179. 0/1 Knapsack Problem & Unbounded Knapsack
+180. Greedy Algorithms: Fractional Knapsack, Activity Selection & Huffman Coding
+
+----------------------------------------
+Part 2: Relational Databases & SQL Mastery
+----------------------------------------
+181. Database Fundamentals: RDBMS vs NoSQL, ACID Properties & Relational Model
+182. Installing PostgreSQL / SQLite & Database Client Tools (DBeaver, pgAdmin)
+183. SQL Data Definition Language (DDL): CREATE, ALTER, DROP, TRUNCATE TABLE
+184. SQL Data Types: INTEGER, VARCHAR, TEXT, BOOLEAN, TIMESTAMP, UUID, JSONB
+185. Constraints: PRIMARY KEY, FOREIGN KEY, NOT NULL, UNIQUE, CHECK, DEFAULT
+186. SQL Data Manipulation Language (DML): INSERT, UPDATE, DELETE with WHERE Clause
+187. Querying Data: SELECT, DISTINCT, Alias (AS), LIMIT, OFFSET, ORDER BY (ASC/DESC)
+188. Filtering Operators: BETWEEN, IN, LIKE, ILIKE, IS NULL, Logical AND/OR/NOT
+189. Aggregate Functions: COUNT, SUM, AVG, MIN, MAX
+190. Grouping Data: GROUP BY and HAVING Filtering Clause
+191. SQL Joins: INNER JOIN, LEFT OUTER JOIN, RIGHT OUTER JOIN, FULL OUTER JOIN
+192. Self Joins & Cross Joins (Cartesian Products)
+193. Subqueries: Scalar Subqueries, Correlated Subqueries, IN and EXISTS Operators
+194. Common Table Expressions (CTEs): WITH Clause & Recursive CTEs for Hierarchies
+195. Window Functions: ROW_NUMBER(), RANK(), DENSE_RANK(), NTILE(), OVER(PARTITION BY ...)
+196. Window Value Functions: LAG(), LEAD(), FIRST_VALUE(), LAST_VALUE()
+197. Database Indexing: B-Tree Indexes, Hash Indexes, Composite Indexes & Covering Indexes
+198. Query Optimization: EXPLAIN and EXPLAIN ANALYZE, Index Scans vs Seq Scans
+199. Database Transactions: BEGIN, COMMIT, ROLLBACK & Savepoints
+200. Transaction Isolation Levels: Read Uncommitted, Read Committed, Repeatable Read, Serializable
+201. Concurrency Anomalies: Dirty Reads, Non-repeatable Reads, Phantom Reads & Write Skew
+202. Database Normalization: 1NF, 2NF, 3NF, BCNF & When to Denormalize
+203. Database Views, Materialized Views & Refresh Strategies
+204. Database Triggers & Stored Procedures / Functions
+205. Connecting Python to SQL: sqlite3 Module, psycopg2 & Connection Pooling
+
+----------------------------------------
+Part 3: Python Backend Architecture & Networking
+----------------------------------------
+206. Networking Essentials: TCP/IP Stack, Sockets, DNS, Ports, and Loopback Address
+207. Python socket Programming: Low-level TCP Server and Client Communication
+208. The HTTP Protocol: HTTP/1.1 vs HTTP/2 vs HTTP/3, Requests, Responses & Status Codes
+209. HTTP Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD (Idempotency)
+210. HTTP Headers: Content-Type, Accept, Authorization, Cookies, User-Agent, CORS
+211. Python http.server Module & Writing a Native HTTP Server from Scratch
+212. The Python requests Library: GET/POST, Custom Headers, Timeout, Session Objects
+213. Parsing JSON, Query Parameters, Form Data & Multipart File Uploads
+214. RESTful API Architectural Constraints: Statelessness, Resource Identification, HATEOAS
+215. API Authentication Mechanisms: Basic Auth, Session Cookies, API Keys, Bearer Tokens
+216. JWT (JSON Web Tokens): Header, Payload, Signature, Access vs Refresh Tokens
+217. Password Security & Hashing: Salt, Hash, bcrypt, argon2 & Rainbow Table Defense
+218. Python WSGI (Web Server Gateway Interface) Specification (PEP 3333)
+219. Python ASGI (Asynchronous Server Gateway Interface) Specification
+220. Introduction to SQLAlchemy ORM: Engine, Session, Declarative Base, Models
+221. SQLAlchemy Queries: Filtering, Joins, Aggregations, and Eager vs Lazy Loading
+222. Database Migrations with Alembic: Configuration, Revision Generation, Upgrade/Downgrade
+223. Web Security Fundamentals: SQL Injection, XSS, CSRF, CORS & Protection Mechanisms
+224. Rate Limiting, Request Throttling, and Input Validation Principles
+225. Month 3 Capstone: Full-Featured REST API with Raw SQL & SQLAlchemy Database Backend
+
+========================================================
+Month 4: Backend + Django + FastAPI + Git (60 Topics)
+========================================================
+
+----------------------------------------
+Part 1: Django Full-Stack & REST Framework
+----------------------------------------
+226. Django Architecture: MVT (Model-View-Template) Pattern & Project Structure
+227. Django Settings, django-admin CLI, manage.py & Environment Configurations
+228. Django Models: Fields, Constraints, Meta Options, and __str__ Representations
+229. Django Model Relationships: OneToOne, ForeignKey (OneToMany), ManyToManyField
+230. Django Migrations: makemigrations, migrate, sqlmigrate, Migration Dependencies
+231. Django ORM QuerySets: Lazy Evaluation, filter, exclude, get, annotate, aggregate
+232. Optimizing Django Queries: select_related (OneToOne/FK) vs prefetch_related (M2M)
+233. Django Admin Interface: ModelAdmin Customization, Search Fields, Filters, Inlines
+234. Django URLs & URL Routing: Path Converters, Regex URLs, Namespaces & Reverse Resolution
+235. Django Function-Based Views (FBVs) vs Class-Based Views (CBVs)
+236. Django Generic CBVs: ListView, DetailView, CreateView, UpdateView, DeleteView
+237. Django Forms & ModelForms: Validation, Clean Methods, CSRF Token Protection
+238. Django Templates: Template Tags, Filters, Template Inheritance (extends, block)
+239. Django Static Files & Media Handling: Development vs Production Serving
+240. Django User Authentication System: AbstractUser vs AbstractBaseUser Custom Models
+241. Django Signals: post_save, pre_delete, receiver Decorator & Dispatching
+242. Django Middleware: Request-Response Lifecycle, Writing Custom Middleware
+243. Introduction to Django REST Framework (DRF): Installation and Settings
+244. DRF Serializers & ModelSerializers: Validation, SerializerMethodField, Nested Serialization
+245. DRF APIViews vs Generic APIViews (ListCreateAPIView, RetrieveUpdateDestroyAPIView)
+246. DRF ViewSets & ModelViewSets with DefaultRouter
+247. DRF Authentication: SessionAuth, TokenAuth, and JWT (SimpleJWT integration)
+248. DRF Permissions: IsAuthenticated, IsAdminUser, and Custom BasePermission
+249. DRF Filtering, Searching, Ordering (django-filter) & Pagination Schemes
+250. Mini-Project: E-Commerce REST API with Cart, Checkout, and Order Management
+
+----------------------------------------
+Part 2: FastAPI, Asynchronous Python & Microservices
+----------------------------------------
+251. Asynchronous Python: Event Loop, Coroutines, async/await Syntax
+252. asyncio Module: asyncio.run(), asyncio.gather(), asyncio.create_task(), Timeouts
+253. Asynchronous I/O vs CPU-Bound Multiprocessing: GIL (Global Interpreter Lock) Deep Dive
+254. Introduction to FastAPI: High Performance, Automatic Interactive Docs (Swagger UI/ReDoc)
+255. Uvicorn & ASGI Application Serving with Hot Reload
+256. Pydantic v2: BaseModel, Field, Data Validation, Type Parsing, Custom Validators
+257. Path Parameters, Query Parameters & Request Body in FastAPI
+258. Request Validation, Error Handling & HTTPException Custom Responses
+259. FastAPI Dependency Injection System: Depends(), Sub-dependencies, Yield Dependencies
+260. Database Integration in FastAPI: Async SQLAlchemy with asyncpg / aiosqlite
+261. Database Sessions in FastAPI: Dependency-injected Async Session Lifecycle
+262. FastAPI Authentication: OAuth2 with Password (and Hashing), Bearer JWT Flow
+263. Background Tasks in FastAPI: BackgroundTasks Class for Deferred Work
+264. File Uploads in FastAPI: UploadFile vs File, Streaming File Responses
+265. WebSockets in FastAPI: Real-Time Bidirectional Communication & Connection Manager
+266. CORS (Cross-Origin Resource Sharing) Configuration in FastAPI
+267. Middleware in FastAPI: Timing, Logging, and Request Modification
+268. Caching with Redis in Python: redis-py, Async Redis, Cache Invalidation Strategies
+269. Background Job Processing with Celery: Workers, Broker (Redis/RabbitMQ), Beat Scheduler
+270. Testing APIs: pytest, pytest-asyncio, httpx.AsyncClient & Mocking Fixtures
+
+----------------------------------------
+Part 3: Git, Version Control & DevOps Foundations
+----------------------------------------
+271. Version Control Concepts: Centralized vs Distributed VCS
+272. Git Configuration: git config, user identity, default editor, credential helper
+273. Git Architecture: Working Directory, Staging Area (Index), Repository (HEAD)
+274. Essential Git Commands: git init, clone, add, commit, status, diff, log
+275. Branching Strategies: git branch, checkout, switch, Git Flow vs GitHub Flow vs Trunk-Based
+276. Merging: Fast-forward vs Three-way Merge, Resolving Merge Conflicts Confidently
+277. Git Rebasing: git rebase, Interactive Rebasing (rebase -i, squash, edit, reword)
+278. Undoing Changes: git restore, git reset (--soft, --mixed, --hard), git revert
+279. Stashing Work: git stash, pop, apply, list, and stash drop
+280. Remote Repositories: git remote, fetch, pull, push, tracking branches
+281. Git Tags & Releases: Annotated vs Lightweight Tags, Semantic Versioning (SemVer)
+282. Advanced Git: git cherry-pick, git reflog (Recovering Lost Commits), git bisect
+283. .gitignore Rules, Best Practices, and Cleaning Tracked Ignored Files (git rm --cached)
+284. GitHub Collaborations: Forking, Pull Requests (PRs), Code Reviews, Protected Branches
+285. Month 4 Capstone: Production-Grade Async Microservice with FastAPI, Redis & GitHub CI
+
+========================================================
+Month 5: AI + ML + Generative AI + Docker + AWS (65 Topics)
+========================================================
+
+----------------------------------------
+Part 1: Scientific Python, Data Analysis & Machine Learning
+----------------------------------------
+286. Scientific Python Stack Overview: NumPy, SciPy, Pandas, Matplotlib, Seaborn
+287. NumPy Arrays: ndarray Creation, Data Types, Shapes, Reshaping, Transposing
+288. NumPy Indexing, Slicing, Boolean Masking & Fancy Indexing
+289. NumPy Vectorization & Broadcasting Rules for Element-Wise Operations
+290. NumPy Linear Algebra: Dot Products, Matrix Multiplication (np.matmul / @), Inverses, SVD
+291. NumPy Statistics & Random Module: Distributions, Seeds, Sampling, Aggregations
+292. Pandas Series and DataFrames: Creation, Structure, Indexing (.loc, .iloc)
+293. Data Ingestion: Reading and Writing CSV, JSON, Parquet, Excel, SQL with Pandas
+294. Data Cleaning: Handling Missing Values (dropna, fillna, interpolate), Duplicates
+295. Data Transformations: apply(), map(), applymap(), string and datetime operations
+296. Grouping and Aggregation: groupby(), agg(), transform(), Pivot Tables, melt()
+297. Merging Data: merge() (inner, left, right, outer), concat(), join()
+298. Time Series Data: DatetimeIndex, Resampling, Rolling Windows, Shifting, Lagging
+299. Data Visualization: Matplotlib Figure/Axes hierarchy, Line, Scatter, Bar, Histogram
+300. Advanced Visualization: Seaborn Heatmaps, Pairplots, Boxplots, Violin Plots
+301. Machine Learning Fundamentals: Supervised vs Unsupervised vs Reinforcement Learning
+302. ML Workflow: Problem Formulation, Train/Validation/Test Splits, Data Leakage
+303. Feature Engineering: Scaling (StandardScaler, MinMaxScaler), One-Hot Encoding, Ordinal Encoding
+304. Handling Class Imbalance: SMOTE, Undersampling, Oversampling, Class Weights
+305. Scikit-Learn Estimator API: fit(), transform(), predict(), predict_proba()
+306. Linear Regression: Ordinary Least Squares (OLS), Cost Function (MSE), Gradient Descent
+307. Regularized Linear Models: Ridge (L2), Lasso (L1), ElasticNet
+308. Logistic Regression for Classification: Sigmoid, Log-Loss, Decision Boundaries
+309. Classification Metrics: Confusion Matrix, Precision, Recall, F1-Score, ROC-AUC Curve
+310. Decision Trees: CART Algorithm, Gini Impurity, Entropy, Information Gain, Pruning
+311. Ensemble Learning: Bagging vs Boosting, Random Forests Classifier/Regressor
+312. Gradient Boosting Machines: XGBoost, LightGBM, CatBoost Architectures & Tuning
+313. Unsupervised Learning: K-Means Clustering, Elbow Method, Silhouette Score
+314. Dimensionality Reduction: Principal Component Analysis (PCA) & Variance Explained
+315. ML Pipelines & Hyperparameter Tuning: GridSearchCV, RandomizedSearchCV, Cross-Validation
+
+----------------------------------------
+Part 2: Deep Learning, Neural Networks & Generative AI
+----------------------------------------
+316. Deep Learning Foundations: Biological vs Artificial Neurons, Perceptrons
+317. Neural Network Architecture: Layers, Weights, Biases, Feedforward Process
+318. Activation Functions: ReLU, Leaky ReLU, Sigmoid, Tanh, Softmax, GELU
+319. Loss Functions: Binary Cross-Entropy, Categorical Cross-Entropy, MSE, MAE
+320. Backpropagation: Chain Rule, Computational Graphs, Automatic Differentiation
+321. Optimization Algorithms: SGD, Momentum, RMSprop, Adam, AdamW, Learning Rate Schedules
+322. PyTorch Basics: Tensors, CUDA/GPU Acceleration, Tensor Operations, Autograd
+323. Building Models in PyTorch: nn.Module, nn.Linear, nn.Sequential, Forward Pass
+324. PyTorch Training Loop: Dataset, DataLoader, Zero Grad, Backward, Optimizer Step
+325. Regularization in Deep Learning: Dropout, Weight Decay, Early Stopping, Batch Normalization
+326. Convolutional Neural Networks (CNN): Convolution, Stride, Padding, Pooling, Image Processing
+327. Recurrent Neural Networks (RNN), LSTM, and GRU for Sequential/Text Data
+328. The Transformer Revolution: Attention Is All You Need, Self-Attention Mechanism
+329. Transformer Architecture: Multi-Head Attention, Positional Encoding, Encoder-Decoder Stacks
+330. Large Language Models (LLMs): Pre-training, Fine-Tuning, RLHF, Direct Preference Optimization
+331. Generative AI APIs: OpenAI API, Gemini API, Anthropic API Integration in Python
+332. Prompt Engineering: Zero-Shot, Few-Shot, Chain-of-Thought (CoT), ReAct Framework
+333. Embeddings: Text-to-Vector Representations, Cosine Similarity, Vector Databases (Pinecone, Chroma, Qdrant)
+334. Retrieval-Augmented Generation (RAG): Document Ingestion, Chunking, Indexing, Retrieval, Generation
+335. AI Agents & Orchestration Frameworks: LangChain, LlamaIndex, Function Calling, Tool Use
+
+----------------------------------------
+Part 3: Containerization (Docker) & Cloud Deployment (AWS)
+----------------------------------------
+336. Containerization Concepts: Virtual Machines vs Containers, Linux Namespaces & cgroups
+337. Installing Docker: Docker Engine, Docker Desktop, Docker Architecture (Client-Server)
+338. Docker CLI Essentials: docker run, ps, stop, rm, images, rmi, logs, exec
+339. Writing Dockerfiles: FROM, WORKDIR, COPY, RUN, ENV, EXPOSE, CMD, ENTRYPOINT
+340. Docker Image Optimization: Layer Caching, Minimizing Image Size, .dockerignore
+341. Multi-Stage Docker Builds for Python Applications
+342. Docker Storage: Volumes (Named Volumes) vs Bind Mounts for Data Persistence
+343. Docker Networking: Bridge, Host, None, and Custom Networks
+344. Multi-Container Orchestration with Docker Compose: docker-compose.yml Syntax, Services, Networks
+345. Cloud Computing Fundamentals: IaaS, PaaS, SaaS, AWS Global Infrastructure (Regions, AZs)
+346. AWS IAM: Users, Groups, Roles, Policies, Principle of Least Privilege
+347. AWS EC2: Instance Types, Security Groups, Key Pairs, Launching Ubuntu Python Servers
+348. AWS S3: Buckets, Objects, Permissions, Hosting Static Assets & Storing Media
+349. AWS RDS: Managed PostgreSQL/MySQL Instances, Automated Backups, Multi-AZ
+350. Month 5 Capstone: Dockerized AI RAG Application Deployed on AWS with Vector Search
+
+========================================================
+Month 6: Real-World Projects + Interview Preparation (55 Topics)
+========================================================
+
+----------------------------------------
+Part 1: Production Software Engineering & CI/CD
+----------------------------------------
+351. Software Architecture Patterns: Monolith, Microservices, Clean Architecture, Hexagonal
+352. Domain-Driven Design (DDD) Principles: Entities, Value Objects, Repositories, Services
+353. 12-Factor App Methodology for Cloud-Native Applications
+354. Code Quality & Linters: Black, Flake8, Ruff, Isort, Pre-commit Hooks
+355. Comprehensive Testing Strategies: Unit Tests, Integration Tests, End-to-End (E2E) Tests
+356. Advanced pytest: Fixtures, Parameterize, Markers, Coverage Reports (pytest-cov)
+357. Continuous Integration (CI) with GitHub Actions: Workflows, Jobs, Steps, Action Marketplace
+358. Continuous Deployment (CD): Automated Testing, Building Docker Images, Pushing to ECR
+359. Web Application Security: OWASP Top 10 Vulnerabilities and Python Mitigations
+360. Secrets Management: Environment Variables, HashiCorp Vault, AWS Secrets Manager
+361. Logging, Monitoring & Observability: Structured Logging (structlog), ELK Stack, Prometheus & Grafana
+362. Distributed Tracing: OpenTelemetry, Sentry for Error Tracking and Performance APM
+363. Performance Profiling: cProfile, line_profiler, memory_profiler, Py-Spy
+364. Concurrency Patterns in Python: Threading, Multiprocessing, concurrent.futures.ThreadPoolExecutor
+365. C-Extensions, Cython & PyO3 (Rust bindings) for Extreme Python Performance
+
+----------------------------------------
+Part 2: Real-World Industry Projects
+----------------------------------------
+366. Project 1: High-Concurrency Real-Time Financial Market Tracker (Architecture & Sockets)
+367. Project 1: Data Streaming Pipeline with Apache Kafka / Redis Streams
+368. Project 1: Real-Time Alerts, Candlestick Aggregations & Database Archival
+369. Project 2: Enterprise SaaS Multi-Tenant Platform (Tenant Isolation & Routing)
+370. Project 2: Dynamic Schema vs Shared Database Architecture
+371. Project 2: Subscription Billing Integration with Stripe API & Webhooks
+372. Project 2: Role-Based Access Control (RBAC) & Organization Hierarchies
+373. Project 3: AI Autonomous Customer Support Agent (System Architecture)
+374. Project 3: Conversation Memory & Context Management with Redis
+375. Project 3: Semantic Routing, Query Classification & Tool Execution
+376. Project 3: Human-in-the-Loop Approval Workflow & Fallback Strategies
+377. Project 4: Scalable Video Transcoding & Processing Worker System
+378. Project 4: Asynchronous Task Distribution with Celery & SQS
+379. Project 4: FFmpeg Python Wrapper, Chunk Processing & S3 Upload
+380. Project 5: Distributed Web Crawler & Scraping Engine (Scrapy + Playwright)
+381. Project 5: Proxy Rotation, User-Agent Spoofing, CAPTCHA Handling
+382. Project 5: Clean Data Pipeline, Deduplication & PostgreSQL Storage
+383. End-to-End Project Deployment: Infrastructure as Code (Terraform)
+384. End-to-End Project Deployment: Zero-Downtime Blue/Green Deployments
+385. Code Auditing, Production Hardening & Disaster Recovery Drill
+
+----------------------------------------
+Part 3: Python & AI Technical Interview Preparation
+----------------------------------------
+386. Technical Interview Strategies: Whiteboard Coding, System Design & Behavioral Rounds
+387. Python Core Mastery Interview Questions: Internals, Memory Management, GC & Ref Counting
+388. Python Dunder Methods, Iterators, Generators & Metaclass Interview Challenges
+389. Top LeetCode Patterns: Two Pointers, Sliding Window, Fast & Slow Pointers
+390. Top LeetCode Patterns: In-place Reversal of a LinkedList, Monotonic Stack
+391. Top LeetCode Patterns: Two Heaps, K-way Merge, Top K Frequent Elements
+392. Top LeetCode Patterns: Subsets, Permutations, Combination Sum (Backtracking)
+393. Top LeetCode Patterns: 0/1 Knapsack, Longest Increasing Subsequence (Dynamic Programming)
+394. Top LeetCode Patterns: Graph Traversal, Topological Sort, Shortest Path Problems
+395. System Design Fundamentals: Scalability, Horizontal vs Vertical Scaling, Load Balancing
+396. System Design: Database Sharding, Replication, Consistency Models (CAP Theorem)
+397. System Design: Caching Strategies (Write-Through, Write-Back, Cache-Aside), CDN
+398. System Design Case Study: Design a URL Shortener (TinyURL)
+399. System Design Case Study: Design a Real-Time Chat System (WhatsApp / Slack)
+400. System Design Case Study: Design a Scalable Newsfeed System (Twitter / Instagram)
+401. AI / ML Interview Questions: Overfitting vs Underfitting, Bias-Variance Tradeoff, Regularization
+402. AI / ML Interview Questions: Transformers, Attention Mechanisms, Fine-Tuning LLMs
+403. Resume Optimization for Senior Python & AI Engineer Roles
+404. Open-Source Contributions & High-Impact GitHub Portfolio Presentation
+405. Behavioral Interview Mastery (STAR Method) & Salary Negotiation Tactics
+
