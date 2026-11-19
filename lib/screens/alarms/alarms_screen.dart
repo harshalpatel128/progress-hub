@@ -7,7 +7,6 @@ import '../../models/alarm_model.dart';
 import '../../providers/alarms_provider.dart';
 import '../../providers/groups_provider.dart';
 import '../../core/notifications/notification_service.dart';
-import '../../core/notifications/alarm_audio_service.dart';
 
 final testingAlarmIdProvider = StateProvider<int?>((ref) => null);
 

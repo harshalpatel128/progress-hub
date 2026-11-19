@@ -8,7 +8,6 @@ import 'package:progress_hub/models/section_model.dart';
 import 'package:progress_hub/models/topic_model.dart';
 import 'package:progress_hub/models/alarm_model.dart';
 import 'package:progress_hub/models/daily_progress_model.dart';
-import 'package:progress_hub/models/user_profile_model.dart';
 import 'package:progress_hub/core/ai/ai_tool_registry.dart';
 
 void main() {

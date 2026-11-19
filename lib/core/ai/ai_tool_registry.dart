@@ -1,13 +1,13 @@
-import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 import '../../models/group_model.dart';
 import '../../models/section_model.dart';
 import '../../models/topic_model.dart';
 import '../../models/alarm_model.dart';
-import '../../models/user_profile_model.dart';
 import '../database/database_service.dart';
 import '../notifications/notification_service.dart';
+import 'ai_image_service.dart';
+import 'ai_document_generator.dart';
 
 class AiActionResult {
   final bool success;
@@ -52,7 +52,16 @@ class AiToolRegistry {
           return await _updateProfile(params);
 
         case 'get_app_summary':
+        case 'analyze_learning_progress':
           return await _getAppSummary();
+
+        case 'generate_image':
+        case 'create_image':
+          return await _generateImage(params);
+
+        case 'generate_document':
+        case 'create_document':
+          return await _generateDocument(params);
 
         default:
           return AiActionResult(
@@ -325,5 +334,95 @@ class AiToolRegistry {
         'currentStreak': stats['currentStreak'],
       },
     );
+  }
+
+  Future<AiActionResult> _generateImage(Map<String, dynamic> params) async {
+    final prompt = (params['prompt'] as String?) ?? 'Futuristic landscape';
+    final style = (params['style'] as String?) ?? 'Photorealistic';
+    final aspectRatio = (params['aspect_ratio'] as String?) ?? '1:1';
+
+    final result = await AiImageService.instance.generateImage(
+      prompt: prompt,
+      style: style,
+      aspectRatio: aspectRatio,
+    );
+
+    if (result.success) {
+      return AiActionResult(
+        success: true,
+        action: 'generate_image',
+        title: 'AI Image Created',
+        message: 'Successfully generated image for: "$prompt"',
+        data: {
+          'image_path': result.localFilePath,
+          'image_url': result.webUrl,
+          'prompt': prompt,
+        },
+      );
+    } else {
+      return AiActionResult(
+        success: false,
+        action: 'generate_image',
+        title: 'Image Generation Failed',
+        message: result.errorMessage ?? 'Failed to generate image',
+      );
+    }
+  }
+
+  Future<AiActionResult> _generateDocument(Map<String, dynamic> params) async {
+    final format = (params['format'] as String?)?.toLowerCase().trim() ?? 'pdf';
+    final title = (params['title'] as String?) ?? 'Document';
+    final content = (params['content'] as String?) ?? '';
+
+    GeneratedDocumentResult res;
+    if (format == 'docx') {
+      res = await AiDocumentGenerator.instance.generateDocx(title: title, content: content);
+    } else if (format == 'xlsx') {
+      final rawRows = params['rows'] as List<dynamic>?;
+      final rows = rawRows?.map((r) => r is List ? r : [r.toString()]).toList() ?? [
+        ['Item', 'Status', 'Date'],
+        [title, 'Active', DateTime.now().toString().substring(0, 10)],
+      ];
+      res = await AiDocumentGenerator.instance.generateXlsx(title: title, rows: rows);
+    } else if (format == 'pptx') {
+      final rawSlides = params['slides'] as List<dynamic>?;
+      final slides = rawSlides?.map((s) => s is Map<String, dynamic> ? s : {'title': s.toString(), 'points': []}).toList() ?? [
+        {'title': title, 'points': ['Overview and key findings', 'Action plan']}
+      ];
+      res = await AiDocumentGenerator.instance.generatePptx(title: title, slides: slides);
+    } else if (format == 'csv') {
+      final rawRows = params['rows'] as List<dynamic>?;
+      final rows = rawRows?.map((r) => r is List ? r : [r.toString()]).toList() ?? [
+        ['Title', 'Content'],
+        [title, content],
+      ];
+      res = await AiDocumentGenerator.instance.generateCsv(title: title, rows: rows);
+    } else if (format == 'txt') {
+      res = await AiDocumentGenerator.instance.generateTxt(title: title, content: content);
+    } else {
+      res = await AiDocumentGenerator.instance.generatePdf(title: title, content: content);
+    }
+
+    if (res.success) {
+      return AiActionResult(
+        success: true,
+        action: 'generate_document',
+        title: '${res.fileType.toUpperCase()} Document Created',
+        message: 'Successfully generated ${res.fileName} (${res.formattedSize})',
+        data: {
+          'file_path': res.filePath,
+          'file_name': res.fileName,
+          'file_type': res.fileType,
+          'file_size': res.fileSizeBytes,
+        },
+      );
+    } else {
+      return AiActionResult(
+        success: false,
+        action: 'generate_document',
+        title: 'Document Generation Failed',
+        message: res.errorMessage ?? 'Could not create document',
+      );
+    }
   }
 }

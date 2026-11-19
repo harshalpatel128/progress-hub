@@ -57,6 +57,8 @@ class AlarmModel {
     return repeatDays.map((d) => dayNames[d] ?? '').join(', ');
   }
 
+  String get repeatDaysText => repeatDaysSummary;
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,

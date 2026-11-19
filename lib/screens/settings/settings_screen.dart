@@ -10,6 +10,8 @@ import '../../core/backup/export_service.dart';
 import '../../core/notifications/notification_service.dart';
 import '../../core/utils/icon_utils.dart';
 import '../profile/profile_screen.dart';
+import '../ai/ai_assistant_screen.dart';
+import '../../core/ai/ai_service.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -25,6 +27,42 @@ class SettingsScreen extends ConsumerWidget {
           // User Profile Quick Card
           _buildSectionHeader('User Profile'),
           _buildProfileCard(context, ref),
+          const SizedBox(height: 16),
+
+          // ProgressAI Assistant Settings
+          _buildSectionHeader('ProgressAI Assistant (ChatGPT & Gemini)'),
+          Card(
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Container(
+                    padding: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(colors: [Color(0xFF10B981), Color(0xFF3B82F6)]),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Icon(Icons.auto_awesome, color: Colors.white, size: 20),
+                  ),
+                  title: const Text('Open ProgressAI Assistant', style: TextStyle(fontWeight: FontWeight.w600)),
+                  subtitle: const Text('ChatGPT-grade assistant, web search, doc & image generator'),
+                  trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => const AiAssistantScreen()));
+                  },
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: const Icon(Icons.key_rounded, color: Color(0xFF10B981)),
+                  title: const Text('Google Gemini API Key', style: TextStyle(fontWeight: FontWeight.w600)),
+                  subtitle: const Text('Direct high-speed Gemini 1.5 Flash access (1500 free req/day)'),
+                  trailing: TextButton(
+                    onPressed: () => _showApiKeyDialog(context),
+                    child: const Text('Configure'),
+                  ),
+                ),
+              ],
+            ),
+          ),
           const SizedBox(height: 16),
 
           // Theme Settings Card
@@ -370,6 +408,59 @@ class SettingsScreen extends ConsumerWidget {
       },
       loading: () => const Center(child: Padding(padding: EdgeInsets.all(12), child: CircularProgressIndicator())),
       error: (_, __) => const SizedBox.shrink(),
+    );
+  }
+
+  void _showApiKeyDialog(BuildContext context) async {
+    final currentKey = await AiService.instance.getApiKey();
+    if (!context.mounted) return;
+    final keyCtrl = TextEditingController(text: currentKey ?? '');
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Row(
+          children: [
+            Icon(Icons.key_rounded, color: Color(0xFF10B981)),
+            SizedBox(width: 8),
+            Text('Google Gemini API Key'),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'ગૂગલના રિયલ Gemini 1.5 Flash AI સાથે સીધા જોડાવા માટે તમારી ફ્રી API Key નાખો:',
+              style: TextStyle(fontSize: 12.5),
+            ),
+            const SizedBox(height: 10),
+            TextField(
+              controller: keyCtrl,
+              decoration: const InputDecoration(
+                labelText: 'Google Gemini API Key',
+                hintText: 'AIzaSy...',
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          ElevatedButton(
+            onPressed: () async {
+              await AiService.instance.saveApiKey(keyCtrl.text.trim());
+              if (ctx.mounted) Navigator.pop(ctx);
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('API Key સાચવવામાં આવી!')),
+                );
+              }
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      ),
     );
   }
 }

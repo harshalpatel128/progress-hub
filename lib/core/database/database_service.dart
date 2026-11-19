@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../models/group_model.dart';
@@ -30,6 +31,12 @@ class DatabaseService {
   }
 
   Future<Database> _initDatabase({String? inMemoryPath}) async {
+    // Initialize FFI SQLite factory for Windows, Linux, and macOS Desktop
+    if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
+      sqfliteFfiInit();
+      databaseFactory = databaseFactoryFfi;
+    }
+
     String path;
     if (inMemoryPath != null) {
       path = inMemoryPath;
@@ -63,6 +70,56 @@ class DatabaseService {
           motivation_quote TEXT DEFAULT 'Small daily improvements over time lead to stunning results.',
           created_at TEXT NOT NULL,
           updated_at TEXT NOT NULL
+        )
+      ''');
+    } catch (_) {}
+    try {
+      await db.execute('''
+        CREATE TABLE IF NOT EXISTS ai_memory (
+          id TEXT PRIMARY KEY,
+          category TEXT NOT NULL,
+          key TEXT NOT NULL,
+          value TEXT NOT NULL,
+          user_input_context TEXT,
+          confidence REAL DEFAULT 1.0,
+          times_referenced INTEGER DEFAULT 1,
+          created_at TEXT NOT NULL,
+          updated_at TEXT NOT NULL
+        )
+      ''');
+    } catch (_) {}
+    try {
+      await db.execute('''
+        CREATE TABLE IF NOT EXISTS ai_conversations (
+          id TEXT PRIMARY KEY,
+          title TEXT NOT NULL,
+          created_at TEXT NOT NULL,
+          updated_at TEXT NOT NULL,
+          is_pinned INTEGER DEFAULT 0,
+          model_used TEXT DEFAULT 'gemini-1.5-flash'
+        )
+      ''');
+    } catch (_) {}
+    try {
+      await db.execute('''
+        CREATE TABLE IF NOT EXISTS ai_messages (
+          id TEXT PRIMARY KEY,
+          conversation_id TEXT NOT NULL,
+          role TEXT NOT NULL,
+          content TEXT NOT NULL,
+          has_action INTEGER DEFAULT 0,
+          action_type TEXT,
+          action_title TEXT,
+          action_details TEXT,
+          action_data_json TEXT,
+          attachments_json TEXT,
+          sources_json TEXT,
+          image_url TEXT,
+          generated_file_path TEXT,
+          generated_file_name TEXT,
+          thumbs_rating INTEGER DEFAULT 0,
+          created_at TEXT NOT NULL,
+          FOREIGN KEY (conversation_id) REFERENCES ai_conversations (id) ON DELETE CASCADE
         )
       ''');
     } catch (_) {}
@@ -234,12 +291,64 @@ class DatabaseService {
       )
     ''');
 
+    // AI Long-term memory & continuous self-learning table
+    batch.execute('''
+      CREATE TABLE ai_memory (
+        id TEXT PRIMARY KEY,
+        category TEXT NOT NULL,
+        key TEXT NOT NULL,
+        value TEXT NOT NULL,
+        user_input_context TEXT,
+        confidence REAL DEFAULT 1.0,
+        times_referenced INTEGER DEFAULT 1,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL
+      )
+    ''');
+
+    // AI Multi-conversation chat history tables
+    batch.execute('''
+      CREATE TABLE ai_conversations (
+        id TEXT PRIMARY KEY,
+        title TEXT NOT NULL,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL,
+        is_pinned INTEGER DEFAULT 0,
+        model_used TEXT DEFAULT 'gemini-1.5-flash'
+      )
+    ''');
+
+    batch.execute('''
+      CREATE TABLE ai_messages (
+        id TEXT PRIMARY KEY,
+        conversation_id TEXT NOT NULL,
+        role TEXT NOT NULL,
+        content TEXT NOT NULL,
+        has_action INTEGER DEFAULT 0,
+        action_type TEXT,
+        action_title TEXT,
+        action_details TEXT,
+        action_data_json TEXT,
+        attachments_json TEXT,
+        sources_json TEXT,
+        image_url TEXT,
+        generated_file_path TEXT,
+        generated_file_name TEXT,
+        thumbs_rating INTEGER DEFAULT 0,
+        created_at TEXT NOT NULL,
+        FOREIGN KEY (conversation_id) REFERENCES ai_conversations (id) ON DELETE CASCADE
+      )
+    ''');
+
     // Indexes for fast lookup
     batch.execute('CREATE INDEX idx_topics_group_id ON topics (group_id)');
     batch.execute('CREATE INDEX idx_topics_section_id ON topics (section_id)');
     batch.execute('CREATE INDEX idx_topics_status ON topics (status)');
     batch.execute('CREATE INDEX idx_daily_progress_date ON daily_progress (date_string)');
     batch.execute('CREATE INDEX idx_daily_progress_group ON daily_progress (group_id, date_string)');
+    batch.execute('CREATE INDEX idx_ai_memory_key ON ai_memory (key)');
+    batch.execute('CREATE INDEX idx_ai_conversations_updated ON ai_conversations (updated_at DESC)');
+    batch.execute('CREATE INDEX idx_ai_messages_conv ON ai_messages (conversation_id)');
 
     await batch.commit();
   }
@@ -642,6 +751,19 @@ class DatabaseService {
     return rows.map((e) => AlarmModel.fromMap(e)).toList();
   }
 
+  Future<AlarmModel?> getAlarmById(int alarmId) async {
+    final db = await database;
+    final rows = await db.rawQuery('''
+      SELECT a.*, g.name as group_name, t.title as topic_name
+      FROM alarms a
+      LEFT JOIN groups g ON a.group_id = g.id
+      LEFT JOIN topics t ON a.topic_id = t.id
+      WHERE a.id = ?
+    ''', [alarmId]);
+    if (rows.isEmpty) return null;
+    return AlarmModel.fromMap(rows.first);
+  }
+
   Future<List<AlarmModel>> getAlarmsForGroup(String groupId) async {
     final db = await database;
     final rows = await db.rawQuery('''
@@ -853,6 +975,39 @@ class DatabaseService {
   }
 
   // -------------------------------------------------------------
+  // CONVENIENCE SHORTCUTS FOR AI & CONTROLLERS
+  // -------------------------------------------------------------
+
+  Future<List<GroupModel>> getGroups({bool includeArchived = false}) =>
+      getAllGroups(includeArchived: includeArchived);
+
+  Future<List<AlarmModel>> getAlarms() => getAllAlarms();
+
+  Future<int> getCurrentStreak({String? groupId}) async {
+    final s = await calculateStreaks(groupId: groupId);
+    return s['currentStreak'] ?? 0;
+  }
+
+  Future<Map<String, dynamic>> getGroupStats(String groupId) async {
+    final counts = await getGroupTopicCounts(groupId);
+    final total = counts['total'] ?? 0;
+    final completed = counts['completed'] ?? 0;
+    final inProgress = counts['inProgress'] ?? 0;
+    final pct = total > 0 ? (completed / total) * 100 : 0.0;
+    return {
+      'total_topics': total,
+      'completed_topics': completed,
+      'in_progress_topics': inProgress,
+      'incomplete_topics': total - completed - inProgress,
+      'completion_percentage': pct,
+    };
+  }
+
+  Future<List<DailyProgressModel>> getDailyProgressByDate(String dateString) {
+    return getDailyProgressRange(null, dateString, dateString);
+  }
+
+  // -------------------------------------------------------------
   // BACKUP & RESTORE ENGINE (JSON EXPORT/IMPORT)
   // -------------------------------------------------------------
 
@@ -963,5 +1118,183 @@ class DatabaseService {
       profile.copyWith(updatedAt: DateTime.now()).toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+  }
+
+  // -------------------------------------------------------------
+  // AI LONG-TERM MEMORY & CONTINUOUS SELF-LEARNING CRUD
+  // -------------------------------------------------------------
+
+  Future<List<Map<String, dynamic>>> getAiMemories() async {
+    final db = await database;
+    try {
+      return await db.query('ai_memory', orderBy: 'updated_at DESC');
+    } catch (_) {
+      return [];
+    }
+  }
+
+  Future<void> saveAiMemory({
+    required String category,
+    required String key,
+    required String value,
+    String? context,
+  }) async {
+    final db = await database;
+    final now = DateTime.now().toIso8601String();
+    try {
+      final existing = await db.query(
+        'ai_memory',
+        where: 'key = ?',
+        whereArgs: [key],
+        limit: 1,
+      );
+
+      if (existing.isNotEmpty) {
+        final times = ((existing.first['times_referenced'] as num?)?.toInt() ?? 1) + 1;
+        await db.update(
+          'ai_memory',
+          {
+            'value': value,
+            'category': category,
+            'user_input_context': context ?? existing.first['user_input_context'],
+            'times_referenced': times,
+            'updated_at': now,
+          },
+          where: 'key = ?',
+          whereArgs: [key],
+        );
+      } else {
+        await db.insert('ai_memory', {
+          'id': 'mem_${DateTime.now().millisecondsSinceEpoch}_${key.hashCode.abs()}',
+          'category': category,
+          'key': key,
+          'value': value,
+          'user_input_context': context ?? '',
+          'confidence': 1.0,
+          'times_referenced': 1,
+          'created_at': now,
+          'updated_at': now,
+        });
+      }
+    } catch (e) {
+      debugPrint('Error saving AI memory: $e');
+    }
+  }
+
+  Future<void> deleteAiMemory(String key) async {
+    final db = await database;
+    try {
+      await db.delete('ai_memory', where: 'key = ?', whereArgs: [key]);
+    } catch (_) {}
+  }
+
+  Future<void> clearAiMemories() async {
+    final db = await database;
+    try {
+      await db.delete('ai_memory');
+    } catch (_) {}
+  }
+
+  // -------------------------------------------------------------
+  // AI MULTI-CONVERSATION CHAT HISTORY CRUD
+  // -------------------------------------------------------------
+
+  Future<String> createAiConversation({String? title, String? modelUsed}) async {
+    final db = await database;
+    final convId = 'conv_${DateTime.now().millisecondsSinceEpoch}';
+    final now = DateTime.now().toIso8601String();
+    await db.insert('ai_conversations', {
+      'id': convId,
+      'title': title ?? 'New Conversation',
+      'created_at': now,
+      'updated_at': now,
+      'is_pinned': 0,
+      'model_used': modelUsed ?? 'gemini-1.5-flash',
+    });
+    return convId;
+  }
+
+  Future<List<Map<String, dynamic>>> getAiConversations({String? query}) async {
+    final db = await database;
+    try {
+      if (query != null && query.trim().isNotEmpty) {
+        return await db.query(
+          'ai_conversations',
+          where: 'title LIKE ?',
+          whereArgs: ['%${query.trim()}%'],
+          orderBy: 'is_pinned DESC, updated_at DESC',
+        );
+      }
+      return await db.query(
+        'ai_conversations',
+        orderBy: 'is_pinned DESC, updated_at DESC',
+      );
+    } catch (_) {
+      return [];
+    }
+  }
+
+  Future<void> updateAiConversationTitle(String convId, String newTitle) async {
+    final db = await database;
+    await db.update(
+      'ai_conversations',
+      {'title': newTitle, 'updated_at': DateTime.now().toIso8601String()},
+      where: 'id = ?',
+      whereArgs: [convId],
+    );
+  }
+
+  Future<void> togglePinAiConversation(String convId, bool isPinned) async {
+    final db = await database;
+    await db.update(
+      'ai_conversations',
+      {'is_pinned': isPinned ? 1 : 0},
+      where: 'id = ?',
+      whereArgs: [convId],
+    );
+  }
+
+  Future<void> deleteAiConversation(String convId) async {
+    final db = await database;
+    await db.delete('ai_messages', where: 'conversation_id = ?', whereArgs: [convId]);
+    await db.delete('ai_conversations', where: 'id = ?', whereArgs: [convId]);
+  }
+
+  Future<void> saveAiMessageRecord(Map<String, dynamic> msg) async {
+    final db = await database;
+    await db.insert('ai_messages', msg, conflictAlgorithm: ConflictAlgorithm.replace);
+    final convId = msg['conversation_id'] as String?;
+    if (convId != null) {
+      await db.update(
+        'ai_conversations',
+        {'updated_at': DateTime.now().toIso8601String()},
+        where: 'id = ?',
+        whereArgs: [convId],
+      );
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getAiMessagesForConversation(String convId) async {
+    final db = await database;
+    try {
+      return await db.query(
+        'ai_messages',
+        where: 'conversation_id = ?',
+        whereArgs: [convId],
+        orderBy: 'created_at ASC',
+      );
+    } catch (_) {
+      return [];
+    }
+  }
+
+  Future<void> updateAiMessageRating(String msgId, int rating) async {
+    final db = await database;
+    await db.update('ai_messages', {'thumbs_rating': rating}, where: 'id = ?', whereArgs: [msgId]);
+  }
+
+  Future<void> deleteAiMessage(String msgId) async {
+    final db = await database;
+    await db.delete('ai_messages', where: 'id = ?', whereArgs: [msgId]);
   }
 }

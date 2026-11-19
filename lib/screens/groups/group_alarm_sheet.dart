@@ -7,7 +7,6 @@ import '../../models/alarm_model.dart';
 import '../../models/group_model.dart';
 import '../../providers/alarms_provider.dart';
 import '../../core/notifications/alarm_audio_service.dart';
-import '../../core/notifications/notification_service.dart';
 
 class GroupAlarmSheet extends ConsumerStatefulWidget {
   final GroupModel group;
